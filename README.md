@@ -1,6 +1,16 @@
-# {Insert Repository Name Here}
+# ODS-API-Upgrade-Scripts
 
-{Insert project information here}
+This repository hosts database upgrade scripts for minor version updates of the
+ODS API.
+
+For more information, see:
+
+* For more information about the ODS API, go to [Ed-Fi
+  Docs](https://docs.ed-fi.org/).
+* For ODS API source code see repositories
+  [Ed-Fi-ODS](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS) and
+  [Ed-Fi-ODS-Implementation](https://github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation).
+* To submit an Issue go to [Ed-Fi Community Hub](https://success.ed-fi.org).
 
 ## Legal Information
 
