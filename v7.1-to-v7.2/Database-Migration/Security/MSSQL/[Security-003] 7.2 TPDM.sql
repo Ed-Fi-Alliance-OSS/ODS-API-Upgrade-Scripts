@@ -120,9 +120,6 @@ END
 PRINT N'Updating TPDM DeployJournal Scripts';
 GO
 
-SET IDENTITY_INSERT [dbo].[DeployJournal] ON 
-GO
-
 INSERT [dbo].[DeployJournal] ([ScriptName], [Applied]) VALUES (N'Extensions.TPDM.1.1.0.Standard.5.1.0.Artifacts.MsSql.Data.Security.1010-TPDM-ResourceClaims.sql', GETDATE())
 GO
 
