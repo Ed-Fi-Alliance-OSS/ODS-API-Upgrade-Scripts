@@ -9,7 +9,7 @@ GO
 PRINT N'Applying 2170-CrisisEvent-security-metadata.sql';
 GO
 BEGIN
-    DECLARE 
+    DECLARE
         @claimId AS INT,
         @claimName AS nvarchar(max),
         @parentResourceClaimId AS INT,
@@ -56,7 +56,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -83,7 +83,7 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Push claimId to the stack
     INSERT INTO @claimIdStack (ResourceClaimId) VALUES (@claimId)
 
@@ -95,7 +95,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -122,16 +122,16 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Setting default authorization metadata
     PRINT 'Deleting default action authorizations for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
-    
+
     DELETE FROM dbo.ResourceClaimActionAuthorizationStrategies
     WHERE ResourceClaimActionId IN (SELECT ResourceClaimActionId FROM dbo.ResourceClaimActions WHERE ResourceClaimId = @claimId);
 
     DELETE FROM dbo.ResourceClaimActions
     WHERE ResourceClaimId = @claimId
-    
+
     -- Default Create authorization
     PRINT 'Creating action ''Create'' for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
     INSERT INTO dbo.ResourceClaimActions(ResourceClaimId, ActionId)
@@ -139,7 +139,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -164,7 +164,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -189,7 +189,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -214,7 +214,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -239,7 +239,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -268,7 +268,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -295,16 +295,16 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Setting default authorization metadata
     PRINT 'Deleting default action authorizations for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
-    
+
     DELETE FROM dbo.ResourceClaimActionAuthorizationStrategies
     WHERE ResourceClaimActionId IN (SELECT ResourceClaimActionId FROM dbo.ResourceClaimActions WHERE ResourceClaimId = @claimId);
 
     DELETE FROM dbo.ResourceClaimActions
     WHERE ResourceClaimId = @claimId
-    
+
     -- Default Create authorization
     PRINT 'Creating action ''Create'' for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
     INSERT INTO dbo.ResourceClaimActions(ResourceClaimId, ActionId)
@@ -312,7 +312,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -337,7 +337,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -362,7 +362,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -387,7 +387,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -412,7 +412,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -450,7 +450,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -458,7 +458,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -468,8 +468,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific ReadChanges authorization
     PRINT 'Creating ''ReadChanges'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadChangesActionId) + ').'
@@ -479,8 +479,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Bootstrap Descriptors and EdOrgs'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -500,7 +500,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -508,7 +508,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Create authorization
     PRINT 'Creating ''Create'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @CreateActionId) + ').'
@@ -518,8 +518,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Ed-Fi Sandbox'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -539,7 +539,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -547,7 +547,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Create authorization
     PRINT 'Creating ''Create'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @CreateActionId) + ').'
@@ -557,8 +557,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -568,8 +568,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Update authorization
     PRINT 'Creating ''Update'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @UpdateActionId) + ').'
@@ -579,8 +579,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Delete authorization
     PRINT 'Creating ''Delete'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @DeleteActionId) + ').'
@@ -590,8 +590,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific ReadChanges authorization
     PRINT 'Creating ''ReadChanges'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadChangesActionId) + ').'
@@ -601,8 +601,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Ed-Fi API Publisher - Reader'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -622,7 +622,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -630,7 +630,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -640,8 +640,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific ReadChanges authorization
     PRINT 'Creating ''ReadChanges'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadChangesActionId) + ').'
@@ -651,8 +651,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Ed-Fi API Publisher - Writer'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -672,7 +672,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -680,7 +680,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Create authorization
     PRINT 'Creating ''Create'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @CreateActionId) + ').'
@@ -690,8 +690,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -701,8 +701,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Update authorization
     PRINT 'Creating ''Update'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @UpdateActionId) + ').'
@@ -712,8 +712,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Delete authorization
     PRINT 'Creating ''Delete'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @DeleteActionId) + ').'
@@ -723,8 +723,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Pop the stack
     DELETE FROM @claimIdStack WHERE Id = (SELECT Max(Id) FROM @claimIdStack)
@@ -736,7 +736,7 @@ END
 PRINT N'Applying 2180-Immunization-Security-Metadata.sql';
 GO
 BEGIN
-    DECLARE 
+    DECLARE
         @claimId AS INT,
         @claimName AS nvarchar(max),
         @parentResourceClaimId AS INT,
@@ -783,7 +783,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -810,7 +810,7 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Push claimId to the stack
     INSERT INTO @claimIdStack (ResourceClaimId) VALUES (@claimId)
 
@@ -822,7 +822,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -849,16 +849,16 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Setting default authorization metadata
     PRINT 'Deleting default action authorizations for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
-    
+
     DELETE FROM dbo.ResourceClaimActionAuthorizationStrategies
     WHERE ResourceClaimActionId IN (SELECT ResourceClaimActionId FROM dbo.ResourceClaimActions WHERE ResourceClaimId = @claimId);
 
     DELETE FROM dbo.ResourceClaimActions
     WHERE ResourceClaimId = @claimId
-    
+
     -- Default Create authorization
     PRINT 'Creating action ''Create'' for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
     INSERT INTO dbo.ResourceClaimActions(ResourceClaimId, ActionId)
@@ -866,7 +866,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -891,7 +891,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -916,7 +916,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -941,7 +941,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -966,7 +966,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -991,7 +991,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -1018,16 +1018,16 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Setting default authorization metadata
     PRINT 'Deleting default action authorizations for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
-    
+
     DELETE FROM dbo.ResourceClaimActionAuthorizationStrategies
     WHERE ResourceClaimActionId IN (SELECT ResourceClaimActionId FROM dbo.ResourceClaimActions WHERE ResourceClaimId = @claimId);
 
     DELETE FROM dbo.ResourceClaimActions
     WHERE ResourceClaimId = @claimId
-    
+
     -- Default Create authorization
     PRINT 'Creating action ''Create'' for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
     INSERT INTO dbo.ResourceClaimActions(ResourceClaimId, ActionId)
@@ -1035,7 +1035,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1060,7 +1060,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1085,7 +1085,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1110,7 +1110,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1135,7 +1135,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1164,7 +1164,7 @@ BEGIN
     SET @claimId = NULL
 
     SELECT @claimId = ResourceClaimId, @existingParentResourceClaimId = ParentResourceClaimId
-    FROM dbo.ResourceClaims 
+    FROM dbo.ResourceClaims
     WHERE ClaimName = @claimName
 
     SELECT @parentResourceClaimId = ResourceClaimId
@@ -1191,16 +1191,16 @@ BEGIN
                 WHERE ResourceClaimId = @claimId
             END
         END
-  
+
     -- Setting default authorization metadata
     PRINT 'Deleting default action authorizations for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
-    
+
     DELETE FROM dbo.ResourceClaimActionAuthorizationStrategies
     WHERE ResourceClaimActionId IN (SELECT ResourceClaimActionId FROM dbo.ResourceClaimActions WHERE ResourceClaimId = @claimId);
 
     DELETE FROM dbo.ResourceClaimActions
     WHERE ResourceClaimId = @claimId
-    
+
     -- Default Create authorization
     PRINT 'Creating action ''Create'' for resource claim ''' + @claimName + ''' (claimId=' + CONVERT(nvarchar, @claimId) + ').'
     INSERT INTO dbo.ResourceClaimActions(ResourceClaimId, ActionId)
@@ -1208,7 +1208,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1233,7 +1233,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1258,7 +1258,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1283,7 +1283,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1308,7 +1308,7 @@ BEGIN
 
     SET @resourceClaimActionId = SCOPE_IDENTITY()
 
-    
+
     SET @authorizationStrategyId = NULL
 
     SELECT @authorizationStrategyId = a.AuthorizationStrategyId
@@ -1346,7 +1346,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -1354,7 +1354,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Create authorization
     PRINT 'Creating ''Create'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @CreateActionId) + ').'
@@ -1364,8 +1364,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -1375,8 +1375,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Update authorization
     PRINT 'Creating ''Update'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @UpdateActionId) + ').'
@@ -1386,8 +1386,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Delete authorization
     PRINT 'Creating ''Delete'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @DeleteActionId) + ').'
@@ -1397,8 +1397,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific ReadChanges authorization
     PRINT 'Creating ''ReadChanges'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadChangesActionId) + ').'
@@ -1408,8 +1408,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Ed-Fi API Publisher - Reader'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -1429,7 +1429,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -1437,7 +1437,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -1447,8 +1447,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific ReadChanges authorization
     PRINT 'Creating ''ReadChanges'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadChangesActionId) + ').'
@@ -1458,8 +1458,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
     ----------------------------------------------------------------------------------------------------------------------------
     -- Claim set: 'Ed-Fi API Publisher - Writer'
     ----------------------------------------------------------------------------------------------------------------------------
@@ -1479,7 +1479,7 @@ BEGIN
 
         SET @claimSetId = SCOPE_IDENTITY()
     END
-  
+
     PRINT 'Deleting existing actions for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ') on resource claim ''' + @claimName + '''.'
 
     DELETE FROM dbo.ClaimSetResourceClaimActionAuthorizationStrategyOverrides
@@ -1487,7 +1487,7 @@ BEGIN
 
     DELETE FROM dbo.ClaimSetResourceClaimActions
     WHERE ClaimSetId = @claimSetId AND ResourceClaimId = @claimId
-    
+
 
     -- Claim set-specific Create authorization
     PRINT 'Creating ''Create'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @CreateActionId) + ').'
@@ -1497,8 +1497,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Read authorization
     PRINT 'Creating ''Read'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @ReadActionId) + ').'
@@ -1508,8 +1508,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Update authorization
     PRINT 'Creating ''Update'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @UpdateActionId) + ').'
@@ -1519,8 +1519,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Claim set-specific Delete authorization
     PRINT 'Creating ''Delete'' action for claim set ''' + @claimSetName + ''' (claimSetId=' + CONVERT(nvarchar, @claimSetId) + ', actionId = ' + CONVERT(nvarchar, @DeleteActionId) + ').'
@@ -1530,8 +1530,8 @@ BEGIN
 
     SET @claimSetResourceClaimActionId = SCOPE_IDENTITY()
 
-    
-    
+
+
 
     -- Pop the stack
     DELETE FROM @claimIdStack WHERE Id = (SELECT Max(Id) FROM @claimIdStack)
@@ -1551,14 +1551,14 @@ CREATE TABLE [dbo].[DeployJournal](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ScriptName] [nvarchar](255) NOT NULL,
 	[Applied] [datetime] NOT NULL,
- CONSTRAINT [PK_DeployJournal_Id] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_DeployJournal_Id] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
-SET IDENTITY_INSERT [dbo].[DeployJournal] ON 
+SET IDENTITY_INSERT [dbo].[DeployJournal] ON
 GO
 
 INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (1, N'Artifacts.MsSql.Structure.Security.0010-Tables.sql', GETDATE())
@@ -1652,6 +1652,9 @@ INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (30, N'EdFi.
 GO
 
 INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (31, N'EdFi.Ods.Standard.Standard.5.1.0.Artifacts.MsSql.Data.Security.2180-Immunization-Security-Metadata.sql', GETDATE())
+GO
+
+SET IDENTITY_INSERT [dbo].[DeployJournal] OFF
 GO
 
 PRINT N'Update complete.';
