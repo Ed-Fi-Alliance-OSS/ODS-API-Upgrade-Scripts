@@ -23,14 +23,14 @@ CREATE TABLE [dbo].[DeployJournal](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ScriptName] [nvarchar](255) NOT NULL,
 	[Applied] [datetime] NOT NULL,
- CONSTRAINT [PK_DeployJournal_Id] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_DeployJournal_Id] PRIMARY KEY CLUSTERED
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
-SET IDENTITY_INSERT [dbo].[DeployJournal] ON 
+SET IDENTITY_INSERT [dbo].[DeployJournal] ON
 GO
 
 INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (1, N'Artifacts.MsSql.Structure.Admin.0020-Tables.sql', GETDATE())
@@ -130,6 +130,9 @@ INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (32, N'Artif
 GO
 
 INSERT [dbo].[DeployJournal] ([Id], [ScriptName], [Applied]) VALUES (33, N'Artifacts.MsSql.Structure.Admin.0174-Alter-OdsInstanceDerivatives-ConnectionString.sql', GETDATE())
+GO
+
+SET IDENTITY_INSERT [dbo].[DeployJournal] OFF
 GO
 
 PRINT N'Update complete.';
