@@ -50,10 +50,6 @@ BEGIN
             WHERE resourceclaimid = claim_id;
         END IF;
     END IF;
-
-    -- Commit transaction
-    COMMIT;
-
     END;
 END
 $$;
@@ -2065,7 +2061,6 @@ BEGIN
     -- Pop the stack
     claim_id_stack := (select claim_id_stack[1:array_upper(claim_id_stack, 1) - 1]);
 
-    COMMIT;
 
     -- TODO: Remove - For interactive development only
     -- SELECT dbo.GetAuthorizationMetadataDocument();
@@ -2077,40 +2072,40 @@ BEGIN;
 
     DELETE FROM public."DeployJournal";
 
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (1, 'Artifacts.PgSql.Structure.Security.0010-Schemas.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (2, 'Artifacts.PgSql.Structure.Security.0020-Tables.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (3, 'Artifacts.PgSql.Structure.Security.0030-ForeignKeys.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (4, 'Artifacts.PgSql.Structure.Security.0040-Indexes.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (5, 'Artifacts.PgSql.Structure.Security.0050-AddUniqueConstraintResourceClaimsClaimName.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (6, 'Artifacts.PgSql.Structure.Security.0050-Tables-MultipleAuthStrats.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (7, 'Artifacts.PgSql.Structure.Security.0060-AlterClaimsetTable.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (8, 'Artifacts.PgSql.Structure.Security.0070-RemoveUnusedApplicationTableAndRemoveDisplayNameResourceName.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (9, 'Artifacts.PgSql.Structure.Security.0080-Alter-Claimsets-Add-Unique-Constraint-ClaimsetName.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (10, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.0001-ResourceClaimMetadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (11, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.0002-ResourceClaimMetadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (12, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.1090-ManagedReasonNotTestedDescriptor.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (13, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2000-AdminApp-ClaimSets.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (14, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2000-AdminApp-ClaimSets_UpgradePath.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (15, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2020-MigrateDataForMultipleAuthStrategies.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (16, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2030-Clean-up-ReadChanges-from-AB-Connect-Claim-Set.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (17, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2030-DropSingleAuthStrategyTables.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (18, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2050-UpdateClaimSetReadOnlyAndInternalUseOnlyColum.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (19, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2060-OwnershipBased-claims-for-People.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (20, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2070-DataStandard4.0a-ResourceClaimMetadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (21, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2070-Namespace-auth-for-GradebookEntry.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (22, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2080-Finance-domain-security-metadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (23, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2090-RemoveOwnershipBasedTestClaimSet.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (24, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2100-UpdateClaimSetInternalUseOnlyColum.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (25, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2120-Add-Auth-Strategies-Inverted-EdOrg-Hierarchy.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (26, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2130-Reference-data-also-use-inverted-EdOrgHierarchy-for-Read.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (27, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2140-Update-identities-claim-name.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (28, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2145-Add-RelationshipsWithStudentsOnlyThroughResponsibilityIncludingDeletes-strategy.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (29, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2150-StudentSpecialEducationProgramEligibilityAssociation-multiple-auth-strat.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (30, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2160-StudentContactAssociation-authorized-on-StudentOnly.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (31, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2170-CrisisEvent-security-metadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (32, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2180-Immunization-Security-Metadata.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (33, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2190-StudentContactAssociation-ClaimName-Update.sql', now()::timestamp);
-    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname) VALUES (34, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2200-AssessmentRegistration-security-metadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (1, 'Artifacts.PgSql.Structure.Security.0010-Schemas.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (2, 'Artifacts.PgSql.Structure.Security.0020-Tables.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (3, 'Artifacts.PgSql.Structure.Security.0030-ForeignKeys.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (4, 'Artifacts.PgSql.Structure.Security.0040-Indexes.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (5, 'Artifacts.PgSql.Structure.Security.0050-AddUniqueConstraintResourceClaimsClaimName.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (6, 'Artifacts.PgSql.Structure.Security.0050-Tables-MultipleAuthStrats.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (7, 'Artifacts.PgSql.Structure.Security.0060-AlterClaimsetTable.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (8, 'Artifacts.PgSql.Structure.Security.0070-RemoveUnusedApplicationTableAndRemoveDisplayNameResourceName.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (9, 'Artifacts.PgSql.Structure.Security.0080-Alter-Claimsets-Add-Unique-Constraint-ClaimsetName.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (10, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.0001-ResourceClaimMetadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (11, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.0002-ResourceClaimMetadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (12, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.1090-ManagedReasonNotTestedDescriptor.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (13, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2000-AdminApp-ClaimSets.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (14, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2000-AdminApp-ClaimSets_UpgradePath.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (15, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2020-MigrateDataForMultipleAuthStrategies.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (16, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2030-Clean-up-ReadChanges-from-AB-Connect-Claim-Set.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (17, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2030-DropSingleAuthStrategyTables.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (18, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2050-UpdateClaimSetReadOnlyAndInternalUseOnlyColum.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (19, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2060-OwnershipBased-claims-for-People.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (20, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2070-DataStandard4.0a-ResourceClaimMetadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (21, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2070-Namespace-auth-for-GradebookEntry.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (22, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2080-Finance-domain-security-metadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (23, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2090-RemoveOwnershipBasedTestClaimSet.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (24, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2100-UpdateClaimSetInternalUseOnlyColum.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (25, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2120-Add-Auth-Strategies-Inverted-EdOrg-Hierarchy.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (26, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2130-Reference-data-also-use-inverted-EdOrgHierarchy-for-Read.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (27, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2140-Update-identities-claim-name.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (28, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2145-Add-RelationshipsWithStudentsOnlyThroughResponsibilityIncludingDeletes-strategy.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (29, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2150-StudentSpecialEducationProgramEligibilityAssociation-multiple-auth-strat.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (30, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2160-StudentContactAssociation-authorized-on-StudentOnly.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (31, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2170-CrisisEvent-security-metadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (32, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2180-Immunization-Security-Metadata.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (33, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2190-StudentContactAssociation-ClaimName-Update.sql', now()::timestamp);
+    INSERT INTO public."DeployJournal" (schemaversionsid, scriptname, applied) VALUES (34, 'EdFi.Ods.Standard.Standard.5.2.0.Artifacts.PgSql.Data.Security.2200-AssessmentRegistration-security-metadata.sql', now()::timestamp);
 
     ALTER SEQUENCE public."DeployJournal_schemaversionsid_seq" RESTART WITH 35;
 

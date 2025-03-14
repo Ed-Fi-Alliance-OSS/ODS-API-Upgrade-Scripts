@@ -71,8 +71,8 @@ This script will update a 7.2 ODS Database to 7.3 and update the DeployJournal.
 
 This script will update 7.2 TPDM ODS Database to 7.3 and update the DeployJournal.
 
-- [SQL Server script](./ODS/MSSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql).
+- [SQL Server script](./ODS/MSSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql).
+- [PostgreSQL script](./ODS/PGSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql).
 
 ### 2. If your 7.2 environment has Change Queries disabled, apply the following scripts
 
