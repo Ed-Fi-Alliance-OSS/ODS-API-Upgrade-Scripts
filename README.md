@@ -1,5 +1,7 @@
 # ODS-API-Upgrade-Scripts
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/ODS-API-Upgrade-Scripts/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ed-Fi-Alliance-OSS/ODS-API-Upgrade-Scripts)
+
 This repository hosts database upgrade scripts for minor version updates of the
 ODS API.
 
