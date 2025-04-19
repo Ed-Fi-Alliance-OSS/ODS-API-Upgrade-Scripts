@@ -8,7 +8,7 @@ Then execute the scripts listed below on the copied databases.
 ## Admin Database Migration Steps
 
 >[!NOTE]
->The Admin database can be upgraded using the v7.2 Installers.
+>It's recommended that you use the v7.2 installer to upgrade the Admin database, but as an alternative, you can execute the script below instead.
 
 ### 1. Apply the following script
 - `[Admin-001] 7.2 Update.sql` Upgrades the database to v7.2 and updates the `DeployJournal` table:
@@ -18,7 +18,7 @@ Then execute the scripts listed below on the copied databases.
 ## Security Database Migration Steps
 
 >[!NOTE]
->The Security database can be upgraded using the v7.2 Installers.
+>It's recommended that you use the v7.2 installer to upgrade the Security database, but as an alternative, you can execute the scripts below instead.
 
 ### 1. Apply the following script
 - `[Security-001] 7.2 Update.sql` Upgrades the database to v7.2 and updates the `DeployJournal` table:
@@ -41,9 +41,6 @@ Then execute the scripts listed below on the copied databases.
   - [PostgreSQL](./Security/PGSQL/[Security-004]%207.2%20TPDM%20ChangeQueries.sql)
 
 ## ODS Database Migration Steps
-
->[!NOTE]
->Since the ODS installer provisions a new ODS database using a backup, a manual upgrade is required.
 
 >[!NOTE]
 >For ODS context/multi-tenant environments, apply the scripts to all of the ODS databases.
@@ -71,3 +68,6 @@ Then execute the scripts listed below on the copied databases.
 - `[ODS-005] 7.2 TPDM ChangeQueries.sql` Upgrades TPDM Change Queries v7.2 and updates the `DeployJournal` table:
   - [SQL Server](./ODS/MSSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql)
   - [PostgreSQL](./ODS/PGSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql)
+
+## Migrate your extensions
+[This guide](../../Extension-migration-guide.md) explains how to generate the migration scripts for your extension.
