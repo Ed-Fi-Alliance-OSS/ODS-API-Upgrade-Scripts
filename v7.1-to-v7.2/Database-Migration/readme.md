@@ -1,103 +1,73 @@
-# Ed-Fi ODS / API v7.1 to 7.2 Database Migration
+# Ed-Fi ODS / API v7.1 to v7.2 Database Migration Guide
 
 ## Preparation
 
-- Generate full backups of the databases.
-  - Use database management tools or automated backup scripts.
-  - Verify the integrity of the backups.
+First copy the Admin, Security, and ODS databases; for example, by backing them up and restoring them.
+Then execute the scripts listed below on the copied databases.
 
-## Admin and Security Database Migration Steps
+## Admin Database Migration Steps
 
-::: note
-Admin and Security databases can be upgraded using the v7.2 Installers.
-:::
+>[!NOTE]
+>It's recommended that you use the v7.2 installer to upgrade the Admin database, but as an alternative, you can execute the script below instead.
 
-### 1. Apply the following scripts
+### 1. Apply the following script
+- `[Admin-001] 7.2 Update.sql` Upgrades the database to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./Admin/MSSQL/[Admin-001]%207.2%20Update.sql)
+  - [PostgreSQL](./Admin/PGSQL/[Admin-001]%207.2%20Update.sql)
 
-#### `[Admin-001] 7.2 Update.sql`
+## Security Database Migration Steps
 
-This script will update a 7.1 Admin Database to 7.2 and update the DeployJournal.
+>[!NOTE]
+>It's recommended that you use the v7.2 installer to upgrade the Security database, but as an alternative, you can execute the scripts below instead.
 
-- [SQL Server script](./Admin/MSSQL/[Admin-001]%207.2%20Update.sql).
-- [Postgres SQL script](./Admin/PGSQL/[Admin-001]%207.2%20Update.sql).
+### 1. Apply the following script
+- `[Security-001] 7.2 Update.sql` Upgrades the database to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-001]%207.2%20Update.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-001]%207.2%20Update.sql)
 
-#### `[Security-001] 7.2 Update.sql`
+### 2. If your v7.1 environment has Change Queries enabled, apply the following script
+- `[Security-002] 7.2 ChangeQueries.sql` Updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-002]%207.2%20ChangeQueries.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-002]%207.2%20ChangeQueries.sql)
 
-This script will update a 7.1 Security Database to 7.2 and update the DeployJournal.
+### 3. If your v7.1 environment has the TPDM plugin, apply the following script
+- `[Security-003] 7.2 TPDM.sql` Upgrades the TPDM extension to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-003]%207.2%20TPDM.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-003]%207.2%20TPDM.sql)
 
-- [SQL Server script](./Security/MSSQL/[Security-001]%207.2%20Update.sql).
-- [Postgres SQL script](./Security/PGSQL/[Security-001]%207.2%20Update.sql).
-
-### 2. If your 7.1 environment has Change Queries enabled, apply the following scripts
-
-#### `[Security-002] 7.2 ChangeQueries.sql`
-
-This script will update the DeployJournal to a migrated 7.2 Security Database.
-
-- [SQL Server script](./Security/MSSQL/[Security-002]%207.2%20ChangeQueries.sql).
-- [Postgres SQL script](./Security/PGSQL/[Security-002]%207.2%20ChangeQueries.sql).
-
-### 3. If your 7.1 environment has the TPDM plugin, apply the following scripts
-
-#### `[Security-003] 7.2 TPDM.sql`
-
-This script will update 7.1 TPDM to 7.2 and update the DeployJournal.
-
-- [SQL Server script](./Security/MSSQL/[Security-003]%207.2%20TPDM.sql).
-- [Postgres SQL script](./Security/PGSQL/[Security-003]%207.2%20TPDM.sql).
-
-#### `[Security-004] 7.2 TPDM ChangeQueries.sql` (Only if Change Queries are enabled)
-
-This script will update 7.1 TPDM Change Queries to 7.2 and update the DeployJournal.
-
-- [SQL Server script](./Security/MSSQL/[Security-004]%207.2%20TPDM%20ChangeQueries.sql).
-- [Postgres SQL script](./Security/PGSQL/[Security-004]%207.2%20TPDM%20ChangeQueries.sql).
+### 4. If your v7.1 environment has the TPDM plugin and Change Queries enabled, apply the following script
+- `[Security-004] 7.2 TPDM ChangeQueries.sql` Upgrades TPDM Change Queries v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-004]%207.2%20TPDM%20ChangeQueries.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-004]%207.2%20TPDM%20ChangeQueries.sql)
 
 ## ODS Database Migration Steps
 
-::: note
-Since the ODS installer provision a new ODS database using a backup, a manual upgrade is required.
-
-For ods context/multi-tenant environments, apply the scripts to all of the ODS databases.
-:::
+>[!NOTE]
+>For ODS context/multi-tenant environments, apply the scripts to all of the ODS databases.
 
 ### 1. Apply the following scripts
+- `[ODS-001] 7.2 Update.sql` Upgrades the database to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./ODS/MSSQL/[ODS-001]%207.2%20Update.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-001]%207.2%20Update.sql)
 
-#### `[ODS-001] 7.2 Update.sql`
+- `[ODS-002] 7.2 Descriptors.sql` Adds v7.2 Descriptors:
+  - [SQL Server](./ODS/MSSQL/[ODS-002]%207.2%20Descriptors.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-002]%207.2%20Descriptors.sql)
 
-This script will update a 7.1 ODS Database to 7.2 and update the DeployJournal.
+### 2. If your v7.1 environment has Change Queries enabled, apply the following script
+- `[ODS-003] 7.2 ChangeQueries.sql` Upgrades the Change Queries feature to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./ODS/MSSQL/[ODS-003]%207.2%20ChangeQueries.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-003]%207.2%20ChangeQueries.sql)
 
-- [SQL Server script](./ODS/MSSQL/[ODS-001]%207.2%20Update.sql).
-- [Postgres SQL script](./ODS/PGSQL/[ODS-001]%207.2%20Update.sql).
+### 3. If your v7.1 environment has the TPDM plugin, apply the following script
+- `[ODS-004] 7.2 TPDM.sql` Upgrades the TPDM extension to v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./ODS/MSSQL/[ODS-004]%207.2%20TPDM.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-004]%207.2%20TPDM.sql)
 
-#### `[ODS-002] 7.2 Descriptors.sql`
+### 4. If your v7.1 environment has the TPDM plugin and Change Queries enabled, apply the following script
+- `[ODS-005] 7.2 TPDM ChangeQueries.sql` Upgrades TPDM Change Queries v7.2 and updates the `DeployJournal` table:
+  - [SQL Server](./ODS/MSSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql)
 
-This script will add 7.2 Descriptors to a migrated 7.2 TPDM ODS Database.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-002]%207.2%20Descriptors.sql).
-- [Postgres SQL script](./ODS/PGSQL/[ODS-002]%207.2%20Descriptors.sql).
-
-### 2. If your 7.1 environment has Change Queries enabled, apply the following scripts
-
-#### `[ODS-003] 7.2 ChangeQueries.sql`
-
-This script will update ChangeQueries to 7.2 and update the DeployJournal.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-003]%207.2%20ChangeQueries.sql).
-- [Postgres SQL script](./ODS/PGSQL/[ODS-003]%207.2%20ChangeQueries.sql).
-
-### 3. If your 7.1 environment has the TPDM plugin, apply the following scripts
-
-#### `[ODS-004] 7.2 TPDM.sql`
-
-This script will update 7.1 TPDM ODS Database to 7.2 and update the DeployJournal.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-004]%207.2%20TPDM.sql).
-- [Postgres SQL script](./ODS/PGSQL/[ODS-004]%207.2%20TPDM.sql).
-
-#### `[ODS-005] 7.2 TPDM ChangeQueries.sql` (Only if Change Queries are enabled)
-
-This script will update the DeployJournal to a migrated 7.2 TPDM ODS Database.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql).
-- [Postgres SQL script](./ODS/PGSQL/[ODS-005]%207.2%20TPDM%20ChangeQueries.sql).
+## Migrate your extensions
+[This guide](../../Extension-migration-guide.md) explains how to generate the migration scripts for your extension.

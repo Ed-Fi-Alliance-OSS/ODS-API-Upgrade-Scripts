@@ -1,100 +1,76 @@
-# Ed-Fi ODS / API v7.2 to 7.3 Database Migration
+# Ed-Fi ODS / API v7.2 to v7.3 Database Migration Guide
 
 ## Preparation
 
-- Generate full backups of the databases.
-  - Use database management tools or automated backup scripts.
-  - Verify the integrity of the backups.
+First copy the Admin, Security, and ODS databases; for example, by backing them up and restoring them.
+Then execute the scripts listed below on the copied databases.
 
-## Admin and Security Database Migration Steps
+## Admin Database Migration Steps
 
 >[!NOTE]
->Admin and Security databases can be upgraded using the v7.3 Installers.
+>It's recommended that you use the v7.3 installer to upgrade the Admin database, but as an alternative, you can execute the script below instead.
 
-### 1. Apply the following scripts
+### 1. Apply the following script
+- `[Admin-001] 7.3 Update.sql` Upgrades the database to v7.3 and updates the `DeployJournal` table:
+  - [SQL Server](./Admin/MSSQL/[Admin-001]%207.3%20Update.sql)
+  - [PostgreSQL](./Admin/PGSQL/[Admin-001]%207.3%20Update.sql)
 
-#### `[Admin-001] 7.3 Update.sql`
+## Security Database Migration Steps
 
-This script will update a 7.2 Admin Database to 7.3 and update the DeployJournal.
+>[!NOTE]
+>It's recommended that you use the v7.3 installer to upgrade the Security database, but as an alternative, you can execute the scripts below instead.
 
-- [SQL Server script](./Admin/MSSQL/[Admin-001]%207.3%20Update.sql).
-- [PostgreSQL script](./Admin/PGSQL/[Admin-001]%207.3%20Update.sql).
+### 1. Apply the following script
+- `[Security-001] 7.3 Update.sql` Upgrades the database to v7.3 and updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-001]%207.3%20Update.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-001]%207.3%20Update.sql)
 
-#### `[Security-001] 7.3 Update.sql`
+### 2. If your v7.2 environment has Change Queries enabled, apply the following script
+- `[Security-002] 7.3 ChangeQueries.sql` Updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-002]%207.3%20ChangeQueries.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-002]%207.3%20ChangeQueries.sql)
 
-This script will update a 7.2 Security Database to 7.3 and update the DeployJournal.
+### 3. If your v7.2 environment has the TPDM plugin, apply the following script
+- `[Security-003] 7.3 TPDM.sql` Updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-003]%207.3%20TPDM.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-003]%207.3%20TPDM.sql)
 
-- [SQL Server script](./Security/MSSQL/[Security-001]%207.3%20Update.sql).
-- [PostgreSQL script](./Security/PGSQL/[Security-001]%207.3%20Update.sql).
-
-### 2. If your 7.2 environment has Change Queries enabled, apply the following scripts
-
-#### `[Security-002] 7.3 ChangeQueries.sql`
-
-This script will update the DeployJournal to a migrated 7.3 Security Database.
-
-- [SQL Server script](./Security/MSSQL/[Security-002]%207.3%20ChangeQueries.sql).
-- [PostgreSQL script](./Security/PGSQL/[Security-002]%207.3%20ChangeQueries.sql).
-
-### 3. If your 7.2 environment has the TPDM plugin, apply the following scripts
-
-#### `[Security-003] 7.3 TPDM.sql`
-
-This script will update 7.2 TPDM to 7.3 and update the DeployJournal.
-
-- [SQL Server script](./Security/MSSQL/[Security-003]%207.3%20TPDM.sql).
-- [PostgreSQL script](./Security/PGSQL/[Security-003]%207.3%20TPDM.sql).
-
-#### `[Security-004] 7.3 TPDM ChangeQueries.sql` (Only if Change Queries are enabled)
-
-This script will update 7.2 TPDM Change Queries to 7.3 and update the DeployJournal.
-
-- [SQL Server script](./Security/MSSQL/[Security-004]%207.3%20TPDM%20ChangeQueries.sql).
-- [PostgreSQL script](./Security/PGSQL/[Security-004]%207.3%20TPDM%20ChangeQueries.sql).
+### 4. If your v7.2 environment has the TPDM plugin and has Change Queries enabled, apply the following script
+- `[Security-004] 7.3 TPDM ChangeQueries.sql` Updates the `DeployJournal` table:
+  - [SQL Server](./Security/MSSQL/[Security-004]%207.3%20TPDM%20ChangeQueries.sql)
+  - [PostgreSQL](./Security/PGSQL/[Security-004]%207.3%20TPDM%20ChangeQueries.sql)
 
 ## ODS Database Migration Steps
 
 >[!NOTE]
->Since the ODS installer provision a new ODS database using a backup, a manual upgrade is required.
->For ods context/multi-tenant environments, apply the scripts to all of the ODS databases.
+>For ODS context/multi-tenant environments, apply the scripts to all of the ODS databases.
 
-### 1. If your 7.2 environment has Change Queries enabled, apply the following scripts
+### 1. Choose and execute a script
 
-#### `[ODS-001a] 7.3 Update ChangeQueries Enabled No TPDM.sql`
+If your v7.2 environment has Change Queries enabled and has the TPDM extension, execute:
+- `[ODS-001b] 7.3 Update ChangeQueries Enabled And TPDM.sql`
+  - [SQL Server](./ODS/MSSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql)
 
-This script will update a 7.2 ODS Database to 7.3 and update the DeployJournal.
+If your v7.2 environment has Change Queries disabled and has the TPDM extension, execute:
+- `[ODS-001d] 7.3 Update ChangeQueries Disabled And TPDM.sql`
+  - [SQL Server](./ODS/MSSQL/[ODS-001d]%207.3%20Update%20ChangeQueries%20Disabled%20And%20TPDM.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-001d]%207.3%20Update%20ChangeQueries%20Disabled%20And%20TPDM.sql)
 
-- [SQL Server script](./ODS/MSSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql).
+If your v7.2 environment has Change Queries enabled and doesn't have the TPDM extension, execute:
+- `[ODS-001a] 7.3 Update ChangeQueries Enabled No TPDM.sql`
+  - [SQL Server](./ODS/MSSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-001a]%207.3%20Update%20ChangeQueries%20Enabled%20No%20TPDM.sql)
 
-#### `[ODS-001b] 7.3 Update ChangeQueries Enabled And TPDM.sql` (Only if TPDM Extension is used)
+If your v7.2 environment has Change Queries disabled and doesn't have the TPDM extension, execute:
+- `[ODS-001c] 7.3 Update ChangeQueries Disabled No TPDM.sql`
+  - [SQL Server](./ODS/MSSQL/[ODS-001c]%207.3%20Update%20ChangeQueries%20Disabled%20No%20TPDM.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-001c]%207.3%20Update%20ChangeQueries%20Disabled%20No%20TPDM.sql)
 
-This script will update 7.2 TPDM ODS Database to 7.3 and update the DeployJournal.
+### 2. Apply the following script
+- `[ODS-002] 7.3 Descriptors.sql` Adds v7.3 Descriptors:
+  - [SQL Server](./ODS/MSSQL/[ODS-002]%207.3%20Descriptors.sql)
+  - [PostgreSQL](./ODS/PGSQL/[ODS-002]%207.3%20Descriptors.sql)
 
-- [SQL Server script](./ODS/MSSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-001b]%207.3%20Update%20ChangeQueries%20Enabled%20And%20TPDM.sql).
-
-### 2. If your 7.2 environment has Change Queries disabled, apply the following scripts
-
-#### `[ODS-001c] 7.3 Update ChangeQueries Disabled No TPDM.sql`
-
-This script will update a 7.2 ODS Database to 7.3 and update the DeployJournal.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-001c]%207.3%20Update%20ChangeQueries%20Disabled%20No%20TPDM.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-001c]%207.3%20Update%20ChangeQueries%20Disabled%20No%20TPDM.sql).
-
-#### `[ODS-001d] 7.3 Update ChangeQueries Disabled And TPDM.sql` (Only if TPDM Extension is used)
-
-This script will update 7.2 TPDM ODS Database to 7.3 and update the DeployJournal.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-001d]%207.3%20Update%20ChangeQueries%20Disabled%20And%20TPDM.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-001d]%207.3%20Update%20ChangeQueries%20Disabled%20And%20TPDM.sql).
-
-### 3. Apply the following scripts
-
-#### `[ODS-002] 7.3 Descriptors.sql`
-
-This script will add 7.3 Descriptors to a migrated 7.3 TPDM ODS Database.
-
-- [SQL Server script](./ODS/MSSQL/[ODS-002]%207.3%20Descriptors.sql).
-- [PostgreSQL script](./ODS/PGSQL/[ODS-002]%207.3%20Descriptors.sql).
+## Migrate your extensions
+[This guide](../../Extension-migration-guide.md) explains how to generate the migration scripts for your extension.

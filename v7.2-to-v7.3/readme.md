@@ -1,8 +1,12 @@
-# Ed-Fi ODS / API v7.2 to 7.3 Migration
+# Ed-Fi ODS / API v7.2 to v7.3 Migration Guide
 
-7.3 Version upgrades the EdFi Standard to 5.2.0,
+This upgrade path migrates your Ed-Fi ODS / API from v7.2 to v7.3, which includes an upgrade to Ed-Fi Standard v5.2.0.
 
-Steps and database scripts can be found in the following paths:
+## Migration Components
 
-* [Application Migration](./Application-Migration/readme.md)
-* [Database Migration](./Database-Migration/readme.md)
+The migration process consists of two main components:
+
+1. [Database Migration Guide](./Database-Migration/readme.md) - Scripts and instructions for database upgrade
+2. [Application Migration Guide](./Application-Migration/readme.md) - Instructions for upgrading the application components
+
+Follow the instructions in each guide.
